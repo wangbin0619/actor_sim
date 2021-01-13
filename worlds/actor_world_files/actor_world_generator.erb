@@ -43,6 +43,8 @@ end
            ])
   end
 
+  
+
 ############### load some files #############
 ### Skin files under model://actor/meshes
 skins =
@@ -52,10 +54,28 @@ skins =
   "SKIN_man_red_shirt.dae"
 ]
 
-
 ############### sitting_actor_pose file ###############
 fromFile(DIR + "/" + "sitting_human_poses.erb")
 
+############# inialize sitting actors #############
+actors_sitting = []
+# Total number of sitting actors
+actors_sitting_count = $sitting_actor_pose.length
+
+#if config and config.key?('humans')
+#  if config['humans'].key?('sitting_count')
+#    actors_sitting_count = config['humans']['sitting_count']
+#  end
+#end
+
+for i in (1..actors_sitting_count)
+  actors_sitting.push(
+  {
+  :pose => $sitting_actor_pose[i-1],
+  :skin => skins.sample,
+  :anim => 'ANIMATION_sitting.dae',
+  })
+end
 
 ############### walking trajectories file ###############
 fromFile(DIR + "/" + "walking_trajectories.erb")
@@ -79,34 +99,6 @@ for trj in $trajs
           total_walking_actors+=1
      end
 end
-
-
-
-############# inialize sitting actors #############
-actors_sitting = []
-# Total number of sitting actors
-actors_sitting_count = $sitting_actor_pose.length
-
-#if config and config.key?('humans')
-#  if config['humans'].key?('sitting_count')
-#    actors_sitting_count = config['humans']['sitting_count']
-#  end
-#end
-
-for i in (1..actors_sitting_count)
-  actors_sitting.push(
-  {
-  :pose => $sitting_actor_pose[i-1],
-  :skin => skins.sample,
-  :anim => 'ANIMATION_sitting.dae',
-  })
-end
-
-
-
-
-
-
 
 ############# inialize walking actors #############
 actors_trajectory = []
@@ -132,11 +124,6 @@ for i in (0..total_walking_actors-1)
   })
 end
 %>
-
-
-
-
-
 
 
 <%#  ############# code generation #############  %>
@@ -188,14 +175,6 @@ end
 <%= fromFile(DIR + "/" + "walking_human_generator.erb") %>
 <% end %>
 
-
-
-
-
-
-
-
-
 <!-- ############### sitting actors ############### -->
 <%
   for actor in actors_sitting
@@ -229,15 +208,8 @@ end
 <%= fromFile(DIR + "/sitting_human_generator.erb") %>
 <% end %>
 
-
-
-
 <!-- ######### standing actors ########-->
 <%= fromFile(DIR + "/standing_humans_generator.erb") %>
-
-
-
-
 
 </world>
 </sdf>

@@ -11,8 +11,6 @@ def fromFile filename
   return ERB.new(File.read(filename), nil, nil, '_sub01').result(binding)
 end
 
-
-
   # Human model names
   types =
   [
@@ -27,20 +25,12 @@ end
   # add files that contains definition of standing areas
   fromFile(DIR + "/" + "standing_areas.erb")
 
-
-
-
-
-
-
 used_poses = []
   tolerance = 1.0
   for area in $standing_areas
     for i in (1..area[:n_humans])
     name = $human_name + '_' + rand(10000..99999).to_s()
     type = types.sample()
-
-
 
     pose = Vector[]
     loop do
@@ -66,11 +56,9 @@ used_poses = []
       break if not used
     end
 
-
     # Store pose so we don't repeat it
     used_poses.push(pose)
 %>
-
 
 <actor name="<%= name %>">
   <pose>
