@@ -2,7 +2,7 @@
 <launch>
 
 
-<arg name="sim_world" default="actors_world"/>
+<arg name="sim_world" default="my"/>
 <arg name="gui" default="true"/>
 
 
